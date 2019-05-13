@@ -209,6 +209,8 @@ def main():
     parser.add_argument('--second_device_only', help="Go through second device pairing only", default='False')
     parser.add_argument('--first_device_info', help="Get Information from first device", default='False')
 
+    parser.add_argument('--create_thread_network', help="Explicitly create a thread network", default='False')
+
     parser.add_argument('--thread_networkname', help="Thread Network Name.", default='')
     parser.add_argument('--thread_networkkey', help="Thread Network Key", default='')
     parser.add_argument('--thread_xpanid', help="Thread XPAN ID.", default='')
@@ -283,6 +285,21 @@ def main():
         enable_network(wdm, network_id)
 
         test_network(wdm, network_id)
+
+        if args.create_thread_network == 'True':
+            """
+            create-thread-network command
+            """
+            network_id = ''
+            try:
+                output = wdm.chat('create-thread-network', timeout=60)
+                network_id = re.findall(r'network id = (\d*)\)', output)[0].strip()
+            except:
+                raise RuntimeError("Process failed at create-thread-network")
+            if 'Create Thread network complete' not in output:
+                raise RuntimeError("Unable to create thread network to second device.")
+
+            enable_network(wdm, network_id)
 
         """
         create-fabric command
