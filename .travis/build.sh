@@ -21,14 +21,30 @@
 #      Travis CI build script for the OpenWeave nRF52840 Lock Example Application.
 #
 
-# Export NRF5_SDK_ROOT variable pointing to the nRF5x SDK for Thread and Zigbee.
-export NRF5_SDK_ROOT=${TRAVIS_BUILD_DIR}/nRF5x-SDK-for-Thread-and-Zigbee
+# Initialize and update all submodules within the example app.
+#
+set -x
 
-# Export NRF5_TOOLS_ROOT variable pointing to the nRF5x command line tools.
-export NRF5_TOOLS_ROOT=${TRAVIS_BUILD_DIR}/nRF5x-Command-Line-Tools
+# Source the nrf setup variables
+. ${TRAVIS_BUILD_DIR}/nrf_setup_vars.sh
 
-# Export GNU_INSTALL_ROOT variable pointing to the ARM GCC tool chain.
-export GNU_INSTALL_ROOT=${TRAVIS_BUILD_DIR}/arm/gcc-arm-none-eabi-7-2018-q2-update/bin/
+git -C ${TRAVIS_BUILD_DIR} submodule init || exit 1
+git -C ${TRAVIS_BUILD_DIR} submodule update || exit 1
+
+set +x
+
+# Log relevant build information.
+#
+echo '---------------------------------------------------------------------------'
+echo 'Build Preparation Complete'
+echo ''
+echo "openweave-nrf52840-lock-example branch: ${TRAVIS_BRANCH}"
+echo "Nordic SDK for Thread and Zigbee: ${NORDIC_SDK_URL}"
+echo "Nordic nRF5x Command Line Tools: ${NORDIC_COMMAND_LINE_TOOLS_URL}"
+echo "ARM GCC Toolchain: ${ARM_GCC_TOOLCHAIN_URL}"
+echo 'Commit Hashes'
+echo '  openweave-nrf52840-lock-example: '`git -C ${TRAVIS_BUILD_DIR} rev-parse --short HEAD`
+echo '---------------------------------------------------------------------------'
 
 # Build the example application.
 make -C ${TRAVIS_BUILD_DIR} || exit 1
