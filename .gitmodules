@@ -3,7 +3,8 @@
 	url = https://github.com/openweave/openweave-core.git
 [submodule "third_party/openthread"]
 	path = third_party/openthread
-	url = https://github.com/openthread/openthread.git
+	url = https://github.com/openthread/ot-nest-nordic.git
+	branch = master-ble-cert
 [submodule "third_party/printf"]
 	path = third_party/printf
 	url = https://github.com/mpaland/printf.git
