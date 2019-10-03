@@ -56,6 +56,8 @@ extern "C" {
 #include <openthread/platform/platform-softdevice.h>
 }
 
+#include "OpenThreadConfig.h"
+
 #include <Weave/DeviceLayer/WeaveDeviceLayer.h>
 #include <Weave/DeviceLayer/ThreadStackManager.h>
 #include <Weave/DeviceLayer/nRF5/GroupKeyStoreImpl.h>
@@ -213,10 +215,17 @@ int main(void)
 
     {
         uint32_t appRAMStart = 0;
+        ble_cfg_t bleCfg;
 
         // Configure the BLE stack using the default settings.
         // Fetch the start address of the application RAM.
         ret = nrf_sdh_ble_default_cfg_set(WEAVE_DEVICE_LAYER_BLE_CONN_CFG_TAG, &appRAMStart);
+        APP_ERROR_CHECK(ret);
+
+        // Increase the GATT table size to allow room for both WoBLE and ToBLE services.
+        memset(&bleCfg, 0, sizeof(bleCfg));
+        bleCfg.gatts_cfg.attr_tab_size.attr_tab_size = NRF_SDH_BLE_GATTS_ATTR_TAB_SIZE * 2;
+        ret = sd_ble_cfg_set(BLE_GATTS_CFG_ATTR_TAB_SIZE, &bleCfg, appRAMStart);
         APP_ERROR_CHECK(ret);
 
         // Enable BLE stack.
