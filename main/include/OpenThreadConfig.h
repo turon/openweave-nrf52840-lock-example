@@ -25,6 +25,8 @@
 #ifndef OPENTHREAD_PLATFORM_CONFIG_H
 #define OPENTHREAD_PLATFORM_CONFIG_H
 
+#include "ble_config.h"
+
 // Disable the Nordic-supplied OpenThread logging facilities and use
 // the facilities provided by the OpenWeave Device Layer (see
 // openweave/src/adaptations/device-layer/nRF5/Logging.cpp).
@@ -34,6 +36,9 @@
 // Set to OT_LOG_LEVEL_INFO or OT_LOG_LEVEL_DEBG for more verbose output if experiencing
 // issues with Thread.
 #define OPENTHREAD_CONFIG_LOG_LEVEL OT_LOG_LEVEL_NOTE
+
+// To turn on Nordic platform logs set this to 1
+#define OPENTHREAD_CONFIG_LOG_PLATFORM 0
 
 // When operating in a less than ideal RF environment, having a more forgiving configuration
 // of OpenThread makes thread a great deal more reliable.
@@ -49,6 +54,30 @@
 //
 #include "openthread-core-nrf52840-config.h"
 
+// ==============================================================
+//          CONFIG TOBLE
+// ==============================================================
+
+/**
+ * To enable the Thread-over-BLE feature set this to 1.
+ */
+#define OPENTHREAD_CONFIG_ENABLE_TOBLE 0
+
+#if OPENTHREAD_CONFIG_ENABLE_TOBLE
+
+#define OPENTHREAD_CONFIG_ENABLE_BLE 1
+#define OPENTHREAD_CONFIG_ENABLE_TOBLE_TO_BLE 1
+#define OPENTHREAD_CONFIG_TOBLE_CENTRAL_ENABLE 0
+#define OPENTHREAD_CONFIG_TOBLE_PERIPHERAL_ENABLE 1
+#define OPENTHREAD_CONFIG_TOBLE_MULTI_RADIO_ENABLE 1
+#define OPENTHREAD_CONFIG_TOBLE_154_ATTACH_ATTEMPT_RATIO 2
+
+#define OPENTHREAD_DISABLE_TOBLE_GATT_ACKNOWLEDGEMENTS 0
+
+#define OPENTHREAD_CONFIG_6LOWPAN_REASSEMBLY_TIMEOUT 60
+
+#endif // OPENTHREAD_CONFIG_ENABLE_TOBLE
+
+#define OPENTHREAD_CONFIG_NORDIC_BLE_CFG_TAG NRF_BLE_CFG_TAG
+
 #endif // OPENTHREAD_PLATFORM_CONFIG_H
-
-
