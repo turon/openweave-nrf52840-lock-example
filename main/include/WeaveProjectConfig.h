@@ -28,6 +28,11 @@
 #ifndef WEAVE_PROJECT_CONFIG_H
 #define WEAVE_PROJECT_CONFIG_H
 
+#include "ble_config.h"
+
+
+#define WEAVE_PROGRESS_LOGGING 1
+
 /**
  * WEAVE_DEVICE_CONFIG_ENABLE_TEST_DEVICE_IDENTITY
  *
@@ -145,5 +150,18 @@
  * vi events get logged.
  */
 #define WEAVE_CONFIG_EVENT_LOGGING_DEFAULT_IMPORTANCE nl::Weave::Profiles::DataManagement::Debug
+
+
+#define WEAVE_DEVICE_CONFIG_WOBLE_SINGLE_CONNECTION 1
+#define WEAVE_DEVICE_CONFIG_WOBLE_DISABLE_ADVERTISING_WHEN_PROVISIONED 1
+#define WEAVE_DEVICE_CONFIG_DISABLE_ACCOUNT_PAIRING 1
+
+/**
+ * WEAVE_DEVICE_LAYER_BLE_CONN_CFG_TAG
+ *
+ * The SoftDevice BLE connection configuration tag must be the same
+ * across both OpenWeave and OpenThread.
+ */
+#define WEAVE_DEVICE_LAYER_BLE_CONN_CFG_TAG NRF_BLE_CFG_TAG
 
 #endif // WEAVE_PROJECT_CONFIG_H

@@ -19,6 +19,8 @@
 #ifndef APP_CONFIG_H
 #define APP_CONFIG_H
 
+#include "ble_config.h"
+
 // ----- Memory Config -----
 
 #define MEM_MANAGER_ENABLED 1
@@ -39,7 +41,6 @@
 #define NRF_SDH_ENABLED 1
 #define NRF_SDH_SOC_ENABLED 1
 #define NRF_SDH_BLE_ENABLED 1
-#define NRF_SDH_BLE_PERIPHERAL_LINK_COUNT 1
 #define NRF_SDH_BLE_VS_UUID_COUNT 2
 #define NRF_BLE_GATT_ENABLED 1
 #define NRF_SDH_BLE_GATT_MAX_MTU_SIZE 251
