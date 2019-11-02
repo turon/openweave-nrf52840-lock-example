@@ -67,16 +67,12 @@ extern "C" {
 
 #include <AppTask.h>
 
-#define APP_DEBUG_DISABLE_WOBLE_WHEN_THREAD_PROVISIONED 0
-
 using namespace ::nl;
 using namespace ::nl::Inet;
 using namespace ::nl::Weave;
 using namespace ::nl::Weave::DeviceLayer;
 
 extern "C" size_t GetHeapTotalSize(void);
-
-static void DeviceEventHandler(const WeaveDeviceEvent * event, intptr_t arg);
 
 // ================================================================================
 // Logging Support
@@ -140,37 +136,6 @@ extern "C" void JLINK_MONITOR_OnPoll(void)
 }
 
 #endif // JLINK_MMD
-
-/**
- * Updates the application state based on the provisioning state.
- * If unprovisioned, enables WoBLE for pairing.
- * Once fully provisioned, disables WoBLE and enables Thread (ToBLE).
- */
-static void EvaluateAppProvisioningState()
-{
-    bool isFullyProvisioned = ConnectivityMgr().IsThreadProvisioned(); 
-
-#if !APP_DEBUG_DISABLE_WOBLE_WHEN_THREAD_PROVISIONED
-    isFullyProvisioned = (isFullyProvisioned 
-                        && ConfigurationMgr().IsMemberOfFabric()
-                        && ConfigurationMgr().IsServiceProvisioned()
-                        && ConfigurationMgr().IsPairedToAccount());
-#endif
-
-    ConnectivityMgr().SetBLEAdvertisingEnabled(!isFullyProvisioned);
-    ConnectivityMgr().SetThreadMode(isFullyProvisioned ? 
-                                    ConnectivityManager::kThreadMode_Enabled : 
-                                    ConnectivityManager::kThreadMode_Disabled); 
-
-    if (isFullyProvisioned)
-    {
-        NRF_LOG_INFO("WoBLE pairing is disabled, as device is provisioned.");
-    }
-    else
-    {
-        NRF_LOG_INFO("WoBLE pairing is enabled.");
-    }
-}
 
 // ================================================================================
 // Main Code
@@ -283,10 +248,6 @@ int main(void)
         APP_ERROR_HANDLER(ret);
     }
 
-    // Register a function to receive events from the Weave device layer.  Note that calls to
-    // this function will happen on the Weave event loop thread, not the app_main thread.
-    PlatformMgr().AddEventHandler(DeviceEventHandler, 0);
-
     NRF_LOG_INFO("Initializing OpenThread stack");
 
     otSysInit(0, NULL);
@@ -333,10 +294,6 @@ int main(void)
         }
     }
 
-#if OPENTHREAD_CONFIG_ENABLE_TOBLE
-    EvaluateAppProvisioningState();
-#endif // OPENTHREAD_CONFIG_ENABLE_TOBLE
-
     NRF_LOG_INFO("Starting Weave task");
 
     ret = PlatformMgr().StartEventLoopTask();
@@ -380,29 +337,4 @@ int main(void)
     // Should never get here
     NRF_LOG_INFO("vTaskStartScheduler() failed");
     APP_ERROR_HANDLER(0);
-}
-
-/* Handle events from the Weave Device layer.
- *
- * NOTE: This function runs on the Weave event loop task.
- */
-void DeviceEventHandler(const WeaveDeviceEvent * event, intptr_t arg)
-{    
-    switch (event->Type)
-    {
-        case DeviceEventType::kThreadStateChange:
-            if (!event->ThreadStateChange.RoleChanged)
-            {
-                break;
-            }
-
-            // else fall-through
-
-        case DeviceEventType::kServiceProvisioningChange:
-        case DeviceEventType::kFabricMembershipChange:
-        case DeviceEventType::kAccountPairingChange:
-        {
-            EvaluateAppProvisioningState();
-        }
-    };
 }

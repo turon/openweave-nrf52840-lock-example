@@ -19,10 +19,17 @@
 #ifndef BLE_CONFIG_H
 #define BLE_CONFIG_H
 
+/**
+ * @file
+ *   This file implements the BLE configuration shared by OpenThread and OpenWeave.
+ */
+
 // ---- BLE Config ----
 #define NRF_BLE_CFG_TAG							1
 
-#define WEAVE_DEVICE_CONFIG_WOBLE_SINGLE_CONNECTION                     1
-
+/**
+ * To enable the Thread-over-BLE feature set this to 1.
+ */
+#define OPENTHREAD_CONFIG_ENABLE_TOBLE 0
 
 #endif // BLE_CONFIG_H
