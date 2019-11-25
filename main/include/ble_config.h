@@ -25,7 +25,12 @@
  */
 
 // ---- BLE Config ----
-#define NRF_BLE_CFG_TAG							1
+#define NRF_BLE_CFG_TAG	1
+
+/**
+ * Increase # of connections supported to two so both WoBLE and ToBLE can advertise.
+ */
+#define NRF_SDH_BLE_PERIPHERAL_LINK_COUNT 2
 
 /**
  * To enable the Thread-over-BLE feature set this to 1.

@@ -40,6 +40,9 @@
 // To turn on Nordic platform logs set this to 1
 #define OPENTHREAD_CONFIG_LOG_PLATFORM 0
 
+/// Turns on Child Supervision to properly recover network connectivity after device reset.
+#define OPENTHREAD_CONFIG_CHILD_SUPERVISION_ENABLE 0
+
 // When operating in a less than ideal RF environment, having a more forgiving configuration
 // of OpenThread makes thread a great deal more reliable.
 #define OPENTHREAD_CONFIG_MAC_MAX_FRAME_RETRIES_DIRECT 15 // default is 3
@@ -72,9 +75,6 @@
 #define OPENTHREAD_CONFIG_6LOWPAN_REASSEMBLY_TIMEOUT 60
 #define OPENTHREAD_CONFIG_MLE_PARENT_REQUEST_ROUTER_TIMEOUT 1500
 #define OPENTHREAD_CONFIG_MLE_PARENT_REQUEST_REED_TIMEOUT 3000
-
-#define OPENTHREAD_CONFIG_MLE_UNICAST_RETRANSMISSION_DELAY 1500
-#define OPENTHREAD_CONFIG_MLE_CHILD_ID_REQUEST_TIMEOUT 10000
 
 #endif // OPENTHREAD_CONFIG_ENABLE_TOBLE
 
