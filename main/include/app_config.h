@@ -19,6 +19,8 @@
 #ifndef APP_CONFIG_H
 #define APP_CONFIG_H
 
+#include "ble_config.h"
+
 // ----- Memory Config -----
 
 #define MEM_MANAGER_ENABLED 1
@@ -39,7 +41,6 @@
 #define NRF_SDH_ENABLED 1
 #define NRF_SDH_SOC_ENABLED 1
 #define NRF_SDH_BLE_ENABLED 1
-#define NRF_SDH_BLE_PERIPHERAL_LINK_COUNT 1
 #define NRF_SDH_BLE_VS_UUID_COUNT 2
 #define NRF_BLE_GATT_ENABLED 1
 #define NRF_SDH_BLE_GATT_MAX_MTU_SIZE 251
@@ -103,7 +104,7 @@
 
 // Enable the Nordic ASSERT() macro.  This also has the effect of enabling
 // FreeRTOS configASSERT() due to logic in FreeRTOSConfig.h
-#define DEBUG_NRF 1
+#define DEBUG_NRF 0
 
 #define NRF_CLOCK_ENABLED 1
 #define NRF_FPRINTF_ENABLED 1
@@ -137,5 +138,6 @@
 // ---- Thread Polling Config ----
 #define THREAD_ACTIVE_POLLING_INTERVAL_MS       100
 #define THREAD_INACTIVE_POLLING_INTERVAL_MS     1000
+
 
 #endif //APP_CONFIG_H
