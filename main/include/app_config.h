@@ -104,7 +104,7 @@
 
 // Enable the Nordic ASSERT() macro.  This also has the effect of enabling
 // FreeRTOS configASSERT() due to logic in FreeRTOSConfig.h
-#define DEBUG_NRF 1
+#define DEBUG_NRF 0
 
 #define NRF_CLOCK_ENABLED 1
 #define NRF_FPRINTF_ENABLED 1
