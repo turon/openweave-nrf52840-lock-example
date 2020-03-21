@@ -151,8 +151,12 @@
  */
 #define WEAVE_CONFIG_EVENT_LOGGING_DEFAULT_IMPORTANCE nl::Weave::Profiles::DataManagement::Debug
 
-
+/**
+ * Ensures that WoBLE and ToBLE advertisements are not sent at the same time.
+ * When TOBLE is enabled, must be set to 1.
+ */
 #define WEAVE_DEVICE_CONFIG_WOBLE_SINGLE_CONNECTION 1
+
 #define WEAVE_DEVICE_CONFIG_WOBLE_DISABLE_ADVERTISING_WHEN_PROVISIONED 1
 #define WEAVE_DEVICE_CONFIG_DISABLE_ACCOUNT_PAIRING 1
 
