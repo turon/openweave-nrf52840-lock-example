@@ -30,7 +30,9 @@
 /**
  * Increase # of connections supported to two so both WoBLE and ToBLE can advertise.
  */
-#define NRF_SDH_BLE_PERIPHERAL_LINK_COUNT 2
+#define NRF_SDH_BLE_PERIPHERAL_LINK_COUNT  2
+#define NRF_SDH_BLE_CENTRAL_LINK_COUNT     0
+#define NRF_SDH_BLE_TOTAL_LINK_COUNT       NRF_SDH_BLE_PERIPHERAL_LINK_COUNT
 
 /**
  * To enable the Thread-over-BLE feature set this to 1.
