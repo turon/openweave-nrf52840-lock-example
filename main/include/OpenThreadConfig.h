@@ -25,6 +25,8 @@
 #ifndef OPENTHREAD_PLATFORM_CONFIG_H
 #define OPENTHREAD_PLATFORM_CONFIG_H
 
+#include "ble_config.h"
+
 // Disable the Nordic-supplied OpenThread logging facilities and use
 // the facilities provided by the OpenWeave Device Layer (see
 // openweave/src/adaptations/device-layer/nRF5/Logging.cpp).
@@ -45,8 +47,34 @@
 // Use smaller maximum interval to speed up reattaching.
 #define OPENTHREAD_CONFIG_ATTACH_BACKOFF_MAXIMUM_INTERVAL (60 * 10 * 1000) // default 1200000 ms
 
+// ==============================================================
+//          CONFIG TOBLE
+// ==============================================================
+
+#if OPENTHREAD_CONFIG_ENABLE_TOBLE
+
+#define OPENTHREAD_CONFIG_ENABLE_BLE 1
+#define OPENTHREAD_CONFIG_ENABLE_TOBLE_TO_BLE 1
+#define OPENTHREAD_CONFIG_TOBLE_CENTRAL_ENABLE 0
+#define OPENTHREAD_CONFIG_TOBLE_PERIPHERAL_ENABLE 1
+#define OPENTHREAD_CONFIG_TOBLE_MULTI_RADIO_ENABLE 1
+#define OPENTHREAD_CONFIG_TOBLE_154_ATTACH_ATTEMPT_RATIO 2
+
+#define OPENTHREAD_CONFIG_6LOWPAN_REASSEMBLY_TIMEOUT 60
+
+#define OPENTHREAD_CONFIG_BLE_EVENTS 1
+#define OPENTHREAD_CONFIG_BLE_EVENT_QUEUE_SIZE 6
+
+#define OPENTHREAD_CONFIG_NORDIC_BLE_CFG_TAG NRF_BLE_CFG_TAG
+
+#define NRF_USE_SOFTDEVICE_TEMPERATURE 1
+
+#endif // OPENTHREAD_CONFIG_ENABLE_TOBLE
+
+// ==============================================================
+
 // Use the Nordic-supplied default platform configuration for remainder
-// of OpenThread config options.
+// of OpenThread config options. Include *after* application overrides above.
 //
 // NB: This file gets included during the build of OpenThread.  Hence
 // it cannot use "openthread" in the path to the included file.

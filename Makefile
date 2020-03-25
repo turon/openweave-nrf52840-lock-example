@@ -24,6 +24,7 @@
 PROJECT_ROOT := $(realpath .)
 
 OPENWEAVE_ROOT ?= $(PROJECT_ROOT)/third_party/openweave-core
+OPENTHREAD_ROOT ?= $(PROJECT_ROOT)/third_party/openthread
 
 BUILD_SUPPORT_DIR = $(OPENWEAVE_ROOT)/build/nrf5
 
@@ -160,7 +161,8 @@ INC_DIRS = \
     $(NRF5_SDK_ROOT)/modules/nrfx \
     $(NRF5_SDK_ROOT)/modules/nrfx/drivers/include \
     $(NRF5_SDK_ROOT)/modules/nrfx/hal \
-    $(NRF5_SDK_ROOT)/modules/nrfx/mdk
+    $(NRF5_SDK_ROOT)/modules/nrfx/mdk \
+    $(OPENTHREAD_ROOT)/examples/platforms/nrf52840
 
 DEFINES = \
     NRF52840_XXAA \

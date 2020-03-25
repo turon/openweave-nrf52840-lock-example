@@ -28,6 +28,8 @@
 #ifndef WEAVE_PROJECT_CONFIG_H
 #define WEAVE_PROJECT_CONFIG_H
 
+#include "ble_config.h"
+
 #if BUILD_RELEASE  // release build
 
 // Security and Authentication enabled for release build.
@@ -158,5 +160,30 @@
 #else
 #define WEAVE_CONFIG_EVENT_LOGGING_DEFAULT_IMPORTANCE nl::Weave::Profiles::DataManagement::Debug
 #endif // BUILD_RELEASE
+
+
+#if OPENTHREAD_CONFIG_ENABLE_TOBLE
+
+/**
+ * Ensures that WoBLE and ToBLE advertisements are not sent at the same time.
+ * When TOBLE is enabled, must be set to 1.
+ */
+#define WEAVE_DEVICE_CONFIG_WOBLE_SINGLE_CONNECTION 1
+
+/**
+ * Ensures that WoBLE and ToBLE advertisements are not sent at the same time.
+ * When TOBLE is enabled, must be set to 1.
+ */
+#define WEAVE_DEVICE_CONFIG_WOBLE_DISABLE_ADVERTISING_WHEN_PROVISIONED 1
+
+#endif
+
+/**
+ * WEAVE_DEVICE_LAYER_BLE_CONN_CFG_TAG
+ *
+ * The SoftDevice BLE connection configuration tag must be the same
+ * across both OpenWeave and OpenThread.
+ */
+#define WEAVE_DEVICE_LAYER_BLE_CONN_CFG_TAG NRF_BLE_CFG_TAG
 
 #endif // WEAVE_PROJECT_CONFIG_H
